@@ -1,26 +1,9 @@
 # README
-
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
+## Heroku
 Link to Heroku instance: https://pacific-temple-93925.herokuapp.com/
+
+Currently only the directories
+* https://pacific-temple-93925.herokuapp.com/beers
+* https://pacific-temple-93925.herokuapp.com/breweries
+
+and their subdirectories have meaningful content.
