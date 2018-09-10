@@ -1,0 +1,80 @@
+[7] pry(main)> Brewery.create name:"BrewDog",year:2007
+   (0.1ms)  begin transaction
+  Brewery Create (6.2ms)  INSERT INTO "breweries" ("name", "year", "created_at", "updated_at") VALUES (?, ?, ?, ?)  [["name", "BrewDog"], ["year", 2007], ["created_at", "2018-09-10 08:38:31.555933"], ["updated_at", "2018-09-10 08:38:31.555933"]]
+   (8.3ms)  commit transaction
+=> #<Brewery:0x0000555faca36400
+ id: 4,
+ name: "BrewDog",
+ year: 2007,
+ created_at: Mon, 10 Sep 2018 08:38:31 UTC +00:00,
+ updated_at: Mon, 10 Sep 2018 08:38:31 UTC +00:00>
+[8] pry(main)> br = _
+=> #<Brewery:0x0000555faca36400
+ id: 4,
+ name: "BrewDog",
+ year: 2007,
+ created_at: Mon, 10 Sep 2018 08:38:31 UTC +00:00,
+ updated_at: Mon, 10 Sep 2018 08:38:31 UTC +00:00>
+[9] pry(main)> pipa = br.beers.create name:"Punk IPA",style:"IPA"
+   (0.1ms)  begin transaction
+  Beer Create (10.1ms)  INSERT INTO "beers" ("name", "style", "brewery_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)  [["name", "Punk IPA"], ["style", "IPA"], ["brewery_id", 4], ["created_at", "2018-09-10 08:39:41.397722"], ["updated_at", "2018-09-10 08:39:41.397722"]]
+   (8.9ms)  commit transaction
+=> #<Beer:0x0000555fac6ead78
+ id: 8,
+ name: "Punk IPA",
+ style: "IPA",
+ brewery_id: 4,
+ created_at: Mon, 10 Sep 2018 08:39:41 UTC +00:00,
+ updated_at: Mon, 10 Sep 2018 08:39:41 UTC +00:00>
+[10] pry(main)> nastat = br.beers.create name:"Nanny State",style:"lowalcohol"
+   (0.1ms)  begin transaction
+  Beer Create (8.3ms)  INSERT INTO "beers" ("name", "style", "brewery_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)  [["name", "Nanny State"], ["style", "lowalcohol"], ["brewery_id", 4], ["created_at", "2018-09-10 08:40:24.083459"], ["updated_at", "2018-09-10 08:40:24.083459"]]
+   (8.1ms)  commit transaction
+=> #<Beer:0x0000555fac5cd008
+ id: 9,
+ name: "Nanny State",
+ style: "lowalcohol",
+ brewery_id: 4,
+ created_at: Mon, 10 Sep 2018 08:40:24 UTC +00:00,
+ updated_at: Mon, 10 Sep 2018 08:40:24 UTC +00:00>
+[11] pry(main)> pipa.ratings.create score:8
+   (0.1ms)  begin transaction
+  Rating Create (6.8ms)  INSERT INTO "ratings" ("score", "beer_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)  [["score", 8], ["beer_id", 8], ["created_at", "2018-09-10 08:40:40.913270"], ["updated_at", "2018-09-10 08:40:40.913270"]]
+   (8.1ms)  commit transaction
+=> #<Rating:0x0000555fac4acf98
+ id: 4,
+ score: 8,
+ beer_id: 8,
+ created_at: Mon, 10 Sep 2018 08:40:40 UTC +00:00,
+ updated_at: Mon, 10 Sep 2018 08:40:40 UTC +00:00>
+[12] pry(main)> pipa.ratings.create score:21
+   (0.1ms)  begin transaction
+  Rating Create (8.5ms)  INSERT INTO "ratings" ("score", "beer_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)  [["score", 21], ["beer_id", 8], ["created_at", "2018-09-10 08:40:45.746888"], ["updated_at", "2018-09-10 08:40:45.746888"]]
+   (14.0ms)  commit transaction
+=> #<Rating:0x0000555fabcf65b0
+ id: 5,
+ score: 21,
+ beer_id: 8,
+ created_at: Mon, 10 Sep 2018 08:40:45 UTC +00:00,
+ updated_at: Mon, 10 Sep 2018 08:40:45 UTC +00:00>
+[13] pry(main)> nastat.ratings.create score:3
+   (0.1ms)  begin transaction
+  Rating Create (7.5ms)  INSERT INTO "ratings" ("score", "beer_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)  [["score", 3], ["beer_id", 9], ["created_at", "2018-09-10 08:40:59.095691"], ["updated_at", "2018-09-10 08:40:59.095691"]]
+   (10.9ms)  commit transaction
+=> #<Rating:0x0000555faba58b00
+ id: 6,
+ score: 3,
+ beer_id: 9,
+ created_at: Mon, 10 Sep 2018 08:40:59 UTC +00:00,
+ updated_at: Mon, 10 Sep 2018 08:40:59 UTC +00:00>
+[14] pry(main)> nastat.ratings.create score:8
+   (0.1ms)  begin transaction
+  Rating Create (6.4ms)  INSERT INTO "ratings" ("score", "beer_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)  [["score", 8], ["beer_id", 9], ["created_at", "2018-09-10 08:41:03.480002"], ["updated_at", "2018-09-10 08:41:03.480002"]]
+   (9.3ms)  commit transaction
+=> #<Rating:0x0000555fab7a0b10
+ id: 7,
+ score: 8,
+ beer_id: 9,
+ created_at: Mon, 10 Sep 2018 08:41:03 UTC +00:00,
+ updated_at: Mon, 10 Sep 2018 08:41:03 UTC +00:00>
+[15] pry(main)> 
