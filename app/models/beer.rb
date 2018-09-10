@@ -9,4 +9,8 @@ class Beer < ApplicationRecord
         return nil if (rc==0)
         sum/rc
     end
+
+    def to_s
+        "#{self.name} by #{self.brewery.name}"
+    end
 end
