@@ -17,5 +17,5 @@ class RatingsController < ApplicationController
         rating = Rating.find(params[:id])
         rating.delete
         redirect_to ratings_path
-      end
+    end
 end

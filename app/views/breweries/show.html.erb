@@ -5,8 +5,15 @@
 Number of products: <%= @brewery.beers.count %><br>
 <p>
 <% @brewery.beers.each do |beer| %>
-  <%= link_to beer.name, beer %><t>
+  <%= link_to beer.name, beer %>
 <% end %>
+</p>
+<p>
+  <% if @brewery.ratings.empty? %>
+    <%= "Our products haven't been rated yet." %>
+  <% else %>
+      <%= "Our products have been rated #{pluralize @brewery.ratings.count, 'time'} with an average rating of #{@brewery.average_rating}"%>
+  <% end %>
 </p>
 <%= link_to 'Edit', edit_brewery_path(@brewery) %> |
 <%= link_to 'Back', breweries_path %>
