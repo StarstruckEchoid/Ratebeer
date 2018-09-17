@@ -1,9 +1,23 @@
 <h2>List of ratings</h2>
-<ul>
- <% @ratings.each do |rating| %>
-   <li> <%= rating %><tb> <%= link_to 'delete', rating, method: :delete, data: { confirm: 'Are you sure?' } %> </li>
- <% end %>
-</ul>
+<table>
+  <tr>
+    <th>Rating</th>
+    <th>Author</th>
+  </tr>
+  <% @ratings.each do |rating| %>
+    <tr>
+      <td>
+        <%= rating %>
+      </td>
+      <td>
+        <% if u = rating.user %>
+          <%= link_to u.username, u %>
+        <% end %>
+      <td>
+    </tr>
+  <% end %>
+  </tr>
+</table>
 <p>
 Users have given <%= @ratings.count %> ratings so far!
 </p>
