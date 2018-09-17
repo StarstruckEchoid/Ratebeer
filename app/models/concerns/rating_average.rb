@@ -9,5 +9,4 @@ module RatingAverage
     sum = rs.reduce(0.0){ |total, r| total + r.score }
     sum / rc
   end
-
 end
