@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   root 'breweries#index'
   get 'signup', to: 'users#new'
+  get 'signin', to: 'sessions#new'
+  delete 'signout', to: 'sessions#destroy'
   resource :session, only: [:new, :create, :destroy]
   resources :users
   resources :ratings, only: [:index, :new, :create, :destroy]
