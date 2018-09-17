@@ -4,6 +4,17 @@
   <strong>Username:</strong>
   <%= @user.username %>
 </p>
+<% if @user.ratings.empty? %>
+  <%= "User hasn't made any ratings yet." %>
+<% else %>
+  <%= "Has made #{pluralize @user.ratings.count, 'rating'}, average rating: #{@user.average_rating}"%>
+<% end %>
+
+<ul>
+<% @user.ratings.each do |r| %>
+  <li><%= r.to_s %> <%= link_to 'delete', r, method: :delete %></li>
+<% end %>
+</ul>
 
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>

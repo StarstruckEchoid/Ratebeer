@@ -4,7 +4,7 @@ module RatingAverage
   def average_rating
     rs = ratings
     rc = rs.count
-    return default if rc.zero?
+    return nil if rc.zero?
 
     sum = rs.reduce(0.0){ |total, r| total + r.score }
     sum / rc
