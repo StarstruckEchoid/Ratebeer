@@ -62,8 +62,9 @@ Naming/UncommunicativeMethodParamName:
   AllowedNames:
     - cn
 
-Lint/SplatKeywordArguments:
-  Enabled: false
-
 Metrics/BlockLength:
   Enabled: false
+
+Metrics/MethodLength:
+  Enabled: true
+  Max: 15
