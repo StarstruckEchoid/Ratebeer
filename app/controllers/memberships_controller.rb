@@ -1,5 +1,6 @@
 class MembershipsController < ApplicationController
   before_action :set_membership, only: [:show, :edit, :update, :destroy]
+  before_action :set_beer_clubs, only: [:new, :create]
 
   # GET /memberships
   # GET /memberships.json
@@ -15,7 +16,6 @@ class MembershipsController < ApplicationController
   # GET /memberships/new
   def new
     @membership = Membership.new
-    @beer_clubs = BeerClub.all
   end
 
   # GET /memberships/1/edit
@@ -69,6 +69,11 @@ class MembershipsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_membership
     @membership = Membership.find(params[:id])
+  end
+
+  def set_beer_clubs
+    u = User.find_by id: current_user
+    @beer_clubs = BeerClub.all.reject { |bc| bc.members.include? u }
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
