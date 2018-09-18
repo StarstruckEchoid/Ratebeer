@@ -1,3 +1,4 @@
 class BeerClub < ApplicationRecord
-  has_many :members, through: :memberships, source: :users
+  has_many :memberships
+  has_many :members, through: :memberships, source: :user
 end

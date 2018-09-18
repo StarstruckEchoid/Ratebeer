@@ -2,12 +2,16 @@
 
 <p>
   <strong>Username:</strong>
-  <%= @user.username %>
+  <%= un = @user.username %>
+</p>
+
+<p>
+  <strong>Ratings:</strong>
 </p>
 <% if @user.ratings.empty? %>
-  <%= "User hasn't made any ratings yet." %>
+  <%= "#{un} hasn't made any ratings yet." %>
 <% else %>
-  <%= "Has made #{pluralize @user.ratings.count, 'rating'}, average rating: #{@user.average_rating}"%>
+  <%= "#{un} has made #{pluralize @user.ratings.count, 'rating'}, average rating: #{@user.average_rating}"%>
 <% end %>
 
 <ul>
@@ -15,6 +19,20 @@
   <li><%= r.to_s %> <%= link_to 'delete', r, method: :delete %></li>
 <% end %>
 </ul>
+
+<p>
+  <strong>Beer Clubs</strong>
+</p>
+<% if @user.beer_clubs.empty? %>
+  <%= "#{un} isn't a member of any beer clubs." %>
+<% else %>
+  <%= "#{un} has joined the following beer clubs:" %>
+  <ul>
+    <% @user.beer_clubs.each do |bc| %>
+      <li> <%= link_to bc.name, bc %> </li>
+    <% end %>  
+  </ul>
+<% end %>
 
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>
