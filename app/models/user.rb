@@ -14,4 +14,16 @@ class User < ApplicationRecord
   has_many :beers, through: :ratings
   has_many :memberships, dependent: :destroy
   has_many :beer_clubs, through: :memberships
+
+  def favorite_beer
+    return nil if ratings.empty?
+
+    ratings.max_by(&:score).beer
+  end
+
+  def favorite_style
+    return nil if ratings.empty?
+
+    ratings.max_by(&:score).beer.style
+  end
 end

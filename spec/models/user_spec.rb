@@ -15,7 +15,7 @@ RSpec.describe User, type: :model do
   end
 
   describe "with a proper password" do
-    let(:user){ User.create username:"Pekka", password:"Secret1", password_confirmation:"Secret1" }
+    let(:user){ FactoryBot.create(:user) }
     let(:test_brewery) { Brewery.new name: "test", year: 2000 }
     let(:test_beer) { Beer.create name: "testbeer", style: "teststyle", brewery: test_brewery }
 
@@ -25,11 +25,8 @@ RSpec.describe User, type: :model do
     end
 
     it "and with two ratings, has the correct average rating" do
-      rating = Rating.new score: 10, beer: test_beer
-      rating2 = Rating.new score: 20, beer: test_beer
-
-      user.ratings << rating
-      user.ratings << rating2
+      FactoryBot.create(:rating, score: 10, user: user)
+      FactoryBot.create(:rating, score: 20, user: user)  
 
       expect(user.ratings.count).to eq(2)
       expect(user.average_rating).to eq(15.0)
@@ -42,17 +39,91 @@ RSpec.describe User, type: :model do
     it "doesn't validate purely numerical passwords" do
       user.password = "666666"
 
-      expect(user).not_to be_valid
-      expect(user.save).to be false
-      expect(User.all).to be_empty
+      not_valid_and_isnt_saved(user)
     end
 
     it "doesn't validate too short passwords" do
       user.password = "5Rt"
 
-      expect(user).not_to be_valid
-      expect(user.save).to be false
-      expect(User.all).to be_empty
+      not_valid_and_isnt_saved(user)
     end
+  end
+
+  describe "favorite beer" do
+    let(:user){ FactoryBot.create(:user) }
+  
+    it "has method for determining one" do
+      expect(user).to respond_to(:favorite_beer)
+    end
+  
+    it "without ratings does not have one" do
+      expect(user.favorite_beer).to eq(nil)
+    end
+
+    it "is the only rated if only one rating" do
+      beer = FactoryBot.create(:beer)
+      rating = FactoryBot.create(:rating, score: 20, beer: beer, user: user)
+    
+      expect(user.favorite_beer).to eq beer
+    end
+
+    it "is the one with highest rating if several rated" do
+      create_beers_with_many_ratings({user: user}, 10, 20, 15, 7, 9)
+      best = create_beer_with_rating({ user: user }, 25 )
+    
+      expect(user.favorite_beer).to eq(best)
+    end
+  end
+
+  describe "favorite style" do
+    let(:user){ FactoryBot.create(:user) }
+  
+    it "has method for determining one" do
+      expect(user).to respond_to(:favorite_style)
+    end
+  
+    it "without ratings does not have one" do
+      expect(user.favorite_style).to eq(nil)
+    end
+
+    it "is the only rated if only one style rated" do
+      style = "Lager"
+      beer = FactoryBot.create(:beer, style: style)
+      rating = FactoryBot.create(:rating, score: 20, beer: beer, user: user)
+    
+      expect(user.favorite_style).to eq style
+    end
+
+    it "is the style with highest rated beer, if two beers of two styles rated once each." do
+      lager = "Lager"
+      paleale = "Pale Ale"
+      lagerbeer = FactoryBot.create(:beer, style: lager)
+      palealebeer = FactoryBot.create(:beer, style: paleale)
+
+      FactoryBot.create(:rating, score: 20, beer: lagerbeer, user: user)
+      FactoryBot.create(:rating, score: 10, beer: paleale, user: user)
+
+      expect(user.favorite_style).to eq lagerbeer
+    end
+  end
+
+  private
+
+  def create_beers_with_many_ratings(object, *scores)
+    scores.each do |score|
+      create_beer_with_rating(object, score)
+    end
+  end
+
+  def create_beer_with_rating(object, score)
+    beer = FactoryBot.create(:beer)
+    FactoryBot.create(:rating, beer: beer, score: score, user: object[:user] )
+    beer
+  end
+
+  def not_valid_and_isnt_saved(user)
+    expect(user).not_to be_valid
+    expect(user.save).to be false
+    expect(User.all).to be_empty
   end
 end
