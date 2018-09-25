@@ -24,6 +24,17 @@ class User < ApplicationRecord
   def favorite_style
     return nil if ratings.empty?
 
-    ratings.max_by(&:score).beer.style
+    ratings_by_style = ratings.group_by{ |r| r.beer.style }
+    ratings_by_style.keys.max_by{ |k| array_average(ratings_by_style[k].map(&:score)) }
+  end
+
+  private
+
+  def array_average(array)
+    size = array.count
+    return nil if size.zero?
+
+    sum = array.reduce(0.0){ |total, x| total + x }
+    sum / size
   end
 end

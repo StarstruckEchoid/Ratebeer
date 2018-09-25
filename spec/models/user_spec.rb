@@ -101,9 +101,19 @@ RSpec.describe User, type: :model do
       palealebeer = FactoryBot.create(:beer, style: paleale)
 
       FactoryBot.create(:rating, score: 20, beer: lagerbeer, user: user)
-      FactoryBot.create(:rating, score: 10, beer: paleale, user: user)
+      FactoryBot.create(:rating, score: 10, beer: palealebeer, user: user)
 
-      expect(user.favorite_style).to eq lagerbeer
+      expect(user.favorite_style).to eq lager
+    end
+
+    it "is the style with the highest average rating otherwise" do
+      lager = "Lager"
+      paleale = "Pale Ale"
+      lagerscores = [19,18,20]
+      palealescores = [1,1,21]
+      create_beers_with_style_and_ratings({user: user},lager, lagerscores)
+      create_beers_with_style_and_ratings({user: user},paleale, palealescores)
+      expect(user.favorite_style).to eq lager
     end
   end
 
@@ -118,6 +128,18 @@ RSpec.describe User, type: :model do
   def create_beer_with_rating(object, score)
     beer = FactoryBot.create(:beer)
     FactoryBot.create(:rating, beer: beer, score: score, user: object[:user] )
+    beer
+  end
+
+  def create_beers_with_style_and_ratings(object, style, scores)
+    scores.each do |score|
+      create_beer_with_style_and_rating(object, style, score)
+    end
+  end
+
+  def create_beer_with_style_and_rating(object, style, score)
+    beer = FactoryBot.create(:beer, style: style)
+    FactoryBot.create(:rating, beer: beer, score: score, user: object[:user])
     beer
   end
 
