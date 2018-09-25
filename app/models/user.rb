@@ -28,6 +28,13 @@ class User < ApplicationRecord
     ratings_by_style.keys.max_by{ |k| array_average(ratings_by_style[k].map(&:score)) }
   end
 
+  def favorite_brewery
+    return nil if ratings.empty?
+
+    ratings_by_brewery = ratings.group_by{ |r| r.beer.brewery }
+    ratings_by_brewery.keys.max_by{ |k| array_average(ratings_by_brewery[k].map(&:score)) }
+  end
+
   private
 
   def array_average(array)

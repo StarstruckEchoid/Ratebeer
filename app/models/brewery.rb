@@ -28,4 +28,8 @@ class Brewery < ApplicationRecord
   def current_year
     Time.new.year
   end
+
+  def to_s
+    name
+  end
 end
