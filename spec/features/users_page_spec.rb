@@ -21,6 +21,14 @@ describe "User" do
       expect(current_path).to eq(signin_path)
       expect(page).to have_content 'Username and/or password mismatch'
     end
+
+    it "can delete their own ratings" do
+      rating = make_rating(@user)
+      sign_in(username:"Pekka", password:"Foobar1")
+      visit user_path(@user)
+      expect(page).to have_content('delete')
+      expect{ click_link('delete', href: rating_path(rating)) }.to change{ Rating.where(user: @user).count }.by(-1)
+    end
   end
 
   it "when signed up with good credentials, is added to the system" do
