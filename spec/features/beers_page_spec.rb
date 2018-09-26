@@ -1,9 +1,13 @@
 require 'rails_helper'
 
+include Helpers
+
 describe "Beer" do
 
-  describe "on the beer creation page, with a valid style and brewery" do
+  describe "on the beer creation page, with a valid style and brewery and while logged in" do
     before :each do
+      FactoryBot.create(:user, username:"Ada Lovelace", password:"Ada1", password_confirmation:"Ada1")
+      sign_in(username: "Ada Lovelace", password:"Ada1")
       initialise_style_and_brewery
     end
 
