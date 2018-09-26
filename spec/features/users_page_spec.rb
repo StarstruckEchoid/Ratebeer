@@ -1,8 +1,10 @@
 require 'rails_helper'
 
+include Helpers
+
 describe "User" do
   before :each do
-    FactoryBot.create(:user, username:'Pekka', password:'Foobar1')
+    @user = FactoryBot.create(:user, username:'Pekka', password:'Foobar1')
   end
 
   describe "who has signed up" do
@@ -31,4 +33,34 @@ describe "User" do
       click_button('Create User')
     }.to change{User.count}.by(1)
   end
+
+  describe "User page" do
+    it "displays user's rating count" do
+      visit user_path(@user)
+      expect(page).to have_content(/(0|no|any) ratings/)
+    end
+
+    it "displays user's ratings" do
+      rating = make_rating(@user)
+      visit user_path(@user)
+      expect(page).to have_content('1 rating')
+      expect(page).to have_content(rating.beer)
+      expect(page).to have_content(rating.score)
+    end
+
+    it "doesn't display other people's ratings" do
+      user2 = FactoryBot.create(:user, username: 'Mikko', password:'Ch0sen0ne', password_confirmation:'Ch0sen0ne')
+      make_rating(user2)
+      visit user_path(@user)
+      expect(page).to have_content(/(0|no|any) ratings/)
+    end
+  end
+end
+
+private
+
+def make_rating(user)
+  brewery = FactoryBot.create(:brewery)
+  beer = FactoryBot.create(:beer, brewery: brewery)
+  rating = FactoryBot.create(:rating, beer: beer, user: user, score:16)
 end
