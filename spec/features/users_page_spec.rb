@@ -42,18 +42,13 @@ describe "User" do
     }.to change{User.count}.by(1)
   end
 
-  describe "User page" do
-    it "displays user's rating count" do
+  describe "homepage" do
+    before :each do
       visit user_path(@user)
-      expect(page).to have_content(/(0|no|any) ratings/)
     end
 
-    it "displays user's ratings" do
-      rating = make_rating(@user)
-      visit user_path(@user)
-      expect(page).to have_content('1 rating')
-      expect(page).to have_content(rating.beer)
-      expect(page).to have_content(rating.score)
+    it "displays user's rating count" do
+      expect(page).to have_content(/(0|no|any) ratings/)
     end
 
     it "doesn't display other people's ratings" do
@@ -61,6 +56,28 @@ describe "User" do
       make_rating(user2)
       visit user_path(@user)
       expect(page).to have_content(/(0|no|any) ratings/)
+    end
+
+    describe "while user has made ratings" do
+
+      before :each do
+        @rating = make_rating(@user)
+        visit user_path(@user)
+      end
+
+      it "displays user's ratings" do
+        expect(page).to have_content('1 rating')
+        expect(page).to have_content(@rating.beer)
+        expect(page).to have_content(@rating.score)
+      end
+
+      it "displays favorite beer style" do
+        expect(page).to have_content(@user.favorite_style)
+      end
+
+      it "displays favorite brewery" do
+        expect(page).to have_content(@user.favorite_brewery.name)
+      end
     end
   end
 end
