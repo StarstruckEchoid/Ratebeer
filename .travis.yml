@@ -1,8 +1,15 @@
 language: ruby
-
 rvm:
 - 2.5.1
-
 script:
-- bundle exec rails db:migrate 
+- bundle exec rails db:migrate
 - bundle exec rspec -fd spec
+deploy:
+  provider: heroku
+  api_key:
+    secure: Kt2C6t515IEWk6HgAUIVBOjWyThjSamPzuRhc1HPWgRJIMeoc4uqoUS2VCycWt42uFZNTQTYxKctSoV5KYyj/tZhNglZVQYOOsSje0aRFmFq032oM+uN0lihQN1xmkEkLEku8w4mKPsIKozJ3JVqUJHyrQhXERHMqbrXYpP6i2UF4kw18RxS90OvdzkP/ZBN0xJNBqp+D/X09VbXXODq3C09jibnPJA9kX+QJd+625tfQPJV6HdQZZ/cgpcsXo3HwQYwJMpkAAZLZVVFtrtKktyKf4T1Ah2GafKsK3lwiZVACQhEkBqm4qY4eD9mxwFIxFFQLKoqTaH1wpJlbLmr0OPKAmzUDZcUYx9FsU9bQWPT93uPD7DBnwWURabBOExcImeHNznQ1lUOfm03lLmQv2UwlQ/0V4IOYdKe8PC6HO3Nf9plNcI8xxAVgCp74TtZsw19xDgeN44dFJFGoQGnIjp/L9omi1C7mdQGadESriz8f0EsBQ65c+Ce8XZut0+P/DsQLakrykiFM5GTmXC9mM1nROnd3BZvXwPFa2brg1mRPyit8fPG+lqZyorzP8u+C+jld3v/Lpqv45oD4weCNuYi30F5OKaJFKkZEh3FtJt56Ij/9txTv+REX8nd1ytWAXy8Y1fj70J4VVt4S6+tuC1Vudoch35jg22NiYcS3wk=
+  app: pacific-temple-93925
+  on:
+    repo: StarstruckEchoid/Ratebeer
+  run:
+  - "rake db:migrate"
