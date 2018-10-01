@@ -10,10 +10,10 @@ describe "Breweries page" do
   describe "when breweries exists" do
     before :each do
       # jotta muuttuja näkyisi it-lohkoissa, tulee sen nimen alkaa @-merkillä
-      @breweries = ["Koff", "Karjala", "Schlenkerla"]
+      @breweries = %w(Koff Karjala Schlenkerla)
       year = 1897
       @breweries.each do |brewery_name|
-        FactoryBot.create(:brewery, name: brewery_name, year: year )
+        FactoryBot.create(:brewery, name: brewery_name, year: year)
       end
 
       visit breweries_path
@@ -32,6 +32,5 @@ describe "Breweries page" do
       expect(page).to have_content "Koff"
       expect(page).to have_content "Established in 1897"
     end
-
   end
 end

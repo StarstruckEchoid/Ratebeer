@@ -2,10 +2,10 @@ require 'rails_helper'
 
 RSpec.describe Beer, type: :model do
   describe "with a proper brewery" do
-    let(:brewery){ Brewery.create name:"TestBrew", year:"2000" }
+    let(:brewery){ Brewery.create name: "TestBrew", year: "2000" }
     describe "and with a proper name and style" do
-      let(:beer){ Beer.new name:"FooBeer", style: "Lager", brewery_id: brewery.id }
-      
+      let(:beer){ Beer.new name: "FooBeer", style: "Lager", brewery_id: brewery.id }
+
       it "is valid" do
         expect(beer).to be_valid
       end
@@ -27,8 +27,8 @@ RSpec.describe Beer, type: :model do
     end
 
     describe "and with a proper name but no style" do
-      let(:beer){ Beer.new name:"FooBeer", brewery_id: brewery.id }
-      
+      let(:beer){ Beer.new name: "FooBeer", brewery_id: brewery.id }
+
       it "isn't valid" do
         expect(beer).to_not be_valid
       end
@@ -37,5 +37,4 @@ RSpec.describe Beer, type: :model do
       end
     end
   end
-
 end
