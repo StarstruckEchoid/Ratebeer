@@ -2,8 +2,10 @@ Rails.application.routes.draw do
   resources :memberships
   resources :beer_clubs
   root 'breweries#index'
+  get 'places', to: 'places#index'
   get 'signup', to: 'users#new'
   get 'signin', to: 'sessions#new'
+  post 'places', to:'places#search'
   delete 'signout', to: 'sessions#destroy'
   resource :session, only: [:new, :create, :destroy]
   resources :users
