@@ -1,5 +1,4 @@
 class BeermappingApi
-
   def self.places_in(city)
     city = city.downcase
     Rails.cache.fetch(city, expires_in: 1.week.to_i) { get_places_in(city) }
@@ -20,6 +19,7 @@ class BeermappingApi
   end
 
   def self.key
-    "731955affc547174161dbd6f97b46538"
+    raise "BEERMAPPING_APIKEY env variable not defined" unless apikey = ENV['BEERMAPPING_APIKEY']
+    apikey
   end
 end
