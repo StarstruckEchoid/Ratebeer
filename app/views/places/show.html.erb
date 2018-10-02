@@ -1,0 +1,7 @@
+<p id="notice"><%= notice %></p>
+
+<h1><%= @place.name %></h1>
+<p>
+    <%= "#{@place.street} #{@place.city} #{@place.zip}" %>
+</p>
+Review us at: <%= link_to @place.reviewlink, @place.reviewlink %>
