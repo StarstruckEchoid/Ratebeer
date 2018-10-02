@@ -25,7 +25,7 @@
   <% end %>
 </ul>
 
-<% if current_user %>
+<% if (user = User.find_by id: current_user) && @beer_club.members.exclude?(user) %>
   <h4>join club:</h4>
 
   <%= form_for(@membership) do |f| %>
