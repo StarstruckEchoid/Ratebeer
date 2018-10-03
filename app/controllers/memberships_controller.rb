@@ -59,7 +59,7 @@ class MembershipsController < ApplicationController
   def destroy
     @membership.destroy
     respond_to do |format|
-      format.html { redirect_to memberships_url, notice: 'Membership was successfully destroyed.' }
+      format.html { redirect_to @membership.user, notice: "You succesfully left #{@membership.beer_club.name}." }
       format.json { head :no_content }
     end
   end
