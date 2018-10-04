@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 describe "Places" do
+  before :each do
+    rig_kumpula_apixu_with_nil
+  end
+
   it "if one is returned by the API, it is shown on the page" do
     rig_kumpula_beer_mapping_with [
       Place.new(name: "Oljenkorsi", id: 1)
@@ -42,4 +46,8 @@ end
 
 def rig_kumpula_beer_mapping_with(array)
   allow(BeermappingApi).to receive(:places_in).with("kumpula").and_return(array)
+end
+
+def rig_kumpula_apixu_with_nil
+  allow(ApixuApi).to receive(:weather_in).with("kumpula").and_return(nil)
 end
