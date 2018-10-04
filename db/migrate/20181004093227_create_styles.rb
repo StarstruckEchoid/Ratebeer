@@ -6,5 +6,7 @@ class CreateStyles < ActiveRecord::Migration[5.2]
 
       t.timestamps
     end
+
+    Beer.all.map(&:style).uniq.each{ |s| Style.create(name: s) }
   end
 end

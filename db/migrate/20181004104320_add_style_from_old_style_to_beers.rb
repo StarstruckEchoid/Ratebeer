@@ -4,6 +4,6 @@ class AddStyleFromOldStyleToBeers < ActiveRecord::Migration[5.2]
   end
 
   def down
-    Beer.all.each { |b| b.update(old_style: b.style.name) }
+    Beer.all.each { |b| b.update(old_style: b.style.name) if b.style }
   end
 end
