@@ -58,6 +58,8 @@ class MembershipsController < ApplicationController
   # DELETE /memberships/1.json
   def destroy
     @membership.destroy
+    raise "Membership not destroyed" if Membership.all.include? @membership
+
     respond_to do |format|
       format.html { redirect_to @membership.user, notice: "You succesfully left #{@membership.beer_club.name}." }
       format.json { head :no_content }
