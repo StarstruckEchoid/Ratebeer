@@ -7,7 +7,14 @@
   <%= submit_tag "Search" %>
 <% end %>
 
+<% if @weather %>
+  <h2>Weather</h2>
+  <%= @weather.text %>
+  <%= image_tag @weather.icon %>
+<% end %>
+
 <% if @places %>
+  <h2> Places </h2>
   <table>
     <thead>
       <% Place.rendered_fields.each do |field| %>
