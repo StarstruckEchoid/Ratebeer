@@ -25,8 +25,9 @@ private
 
 def initialise_style_and_brewery
   FactoryBot.create(:brewery, name: 'TestBrew')
+  FactoryBot.create(:style, name: 'Lager')
 
   visit new_beer_path
-  select('Lager', from: 'beer_style')
+  select('Lager', from: 'beer_style_id')
   select('TestBrew', from: 'beer_brewery_id')
 end

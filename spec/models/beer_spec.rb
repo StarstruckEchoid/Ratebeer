@@ -2,9 +2,10 @@ require 'rails_helper'
 
 RSpec.describe Beer, type: :model do
   describe "with a proper brewery" do
-    let(:brewery){ Brewery.create name: "TestBrew", year: "2000" }
+    let(:brewery){ FactoryBot.create(:brewery) }
+    let(:style){ FactoryBot.create(:style) }
     describe "and with a proper name and style" do
-      let(:beer){ Beer.new name: "FooBeer", style: "Lager", brewery_id: brewery.id }
+      let(:beer){ Beer.new name: "FooBeer", style: style, brewery_id: brewery.id }
 
       it "is valid" do
         expect(beer).to be_valid
@@ -16,7 +17,7 @@ RSpec.describe Beer, type: :model do
     end
 
     describe "and with a proper style but no name" do
-      let(:beer){ Beer.new style: "Lager", brewery_id: brewery.id }
+      let(:beer){ Beer.new style: style, brewery_id: brewery.id }
 
       it "isn't valid" do
         expect(beer).to_not be_valid
