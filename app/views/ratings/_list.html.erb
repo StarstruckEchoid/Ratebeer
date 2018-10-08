@@ -1,0 +1,19 @@
+<table class="table table-hover">
+  <thead>
+  <tr>
+    <% columns.each do |column| %>
+      <th> <%= column.to_s.humanize %></th>
+    <% end %>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% array.each do |value| %>
+      <tr>
+        <% columns.each do |column| %>
+          <td><%= value.send(column) %></td>
+        <% end %>
+      </tr>
+  <% end %>
+  </tbody>
+</table>

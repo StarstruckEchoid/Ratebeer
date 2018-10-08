@@ -13,7 +13,7 @@ class Brewery < ApplicationRecord
 
   scope :active, -> { where active: true }
   scope :retired, -> { where active: [nil, false] }
-  scope :best_3, -> { all.sort( & RatingAverage.compare ).first 3 }
+  scope :best, -> { all.sort( & RatingAverage.compare ).first 3 }
 
   def print_report
     puts name
@@ -26,13 +26,13 @@ class Brewery < ApplicationRecord
     puts "changed year to #{year}"
   end
 
+  def to_s
+    name
+  end
+
   private
 
   def current_year
     Time.new.year
-  end
-
-  def to_s
-    name
   end
 end

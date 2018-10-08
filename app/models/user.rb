@@ -35,6 +35,10 @@ class User < ApplicationRecord
     ratings_by_brewery.keys.max_by{ |k| array_average(ratings_by_brewery[k].map(&:score)) }
   end
 
+  def to_s
+    username
+  end
+
   private
 
   def array_average(array)

@@ -1,24 +1,10 @@
-<h2>List of ratings</h2>
-<table class="table table-sm">
-  <tr>
-    <th>Rating</th>
-    <th>Author</th>
-  </tr>
-  <% @ratings.each do |rating| %>
-    <tr>
-      <td>
-        <%= rating %>
-      </td>
-      <td>
-        <% if u = rating.user %>
-          <%= link_to u.username, u %>
-        <% end %>
-      <td>
-    </tr>
-  <% end %>
-  </tr>
-</table>
-<p>
-Users have given <%= @ratings.count %> ratings so far!
-</p>
+<h2>Top Beers</h2>
+<%= render 'list', array:@best_beers, columns:[:name, :brewery, :average_rating] %>
+
+<h2>Top Breweries</h2>
+<%= render 'list', array:@best_breweries, columns:[:name, :year, :average_rating] %>
+
+<h2>Most recent ratings</h2>
+<%= render 'list', array:@recent_ratings, columns:[:beer, :score, :user] %>
+
 <%= link_to 'New rating', new_rating_path %>
