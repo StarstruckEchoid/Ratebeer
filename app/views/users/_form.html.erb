@@ -14,18 +14,18 @@
   <% if @user.new_record? %>
     <div class="form-group">
       <%= form.label :username %>
-      <%= form.text_field :username %>
+      <%= form.text_field :username, class:"form-control" %>
     </div>
   <% end %>
 
   <div class="form-group">
-    <%= form.label :password %><br />
-    <%= form.password_field :password %>
+    <%= form.label :password %><br>
+    <%= form.password_field :password, class:"form-control" %>
   </div>
 
   <div class="form-group">
-    <%= form.label :password_confirmation %><br />
-    <%= form.password_field :password_confirmation  %>
+    <%= form.label :password_confirmation %><br>
+    <%= form.password_field :password_confirmation, class:"form-control"  %>
   </div>
 
   <div class="actions">
