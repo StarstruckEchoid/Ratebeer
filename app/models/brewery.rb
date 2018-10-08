@@ -3,14 +3,17 @@
 class Brewery < ApplicationRecord
   include RatingAverage
 
-  validates :name, presence: true
+  has_many :beers, dependent: :destroy
+  has_many :ratings, through: :beers
 
+  validates :name, presence: true
   validates :year, numericality: { less_than_or_equal_to: :current_year,
                                    greater_than_or_equal_to: 1040,
                                    only_integer: true }
 
-  has_many :beers, dependent: :destroy
-  has_many :ratings, through: :beers
+  scope :active, -> { where active: true }
+  scope :retired, -> { where active: [nil, false] }
+  scope :best_3, -> { all.sort( & RatingAverage.compare ).first 3 }
 
   def print_report
     puts name
