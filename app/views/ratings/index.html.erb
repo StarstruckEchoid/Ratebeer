@@ -1,10 +1,16 @@
 <h2>Top Beers</h2>
-<%= render 'list', array:@best_beers, columns:[:name, :brewery, :average_rating] %>
+<%= render 'list', array:@best_beers, columns:[:name, :brewery, :average_rating, :rating_count] %>
 
 <h2>Top Breweries</h2>
-<%= render 'list', array:@best_breweries, columns:[:name, :year, :average_rating] %>
+<%= render 'list', array:@best_breweries, columns:[:name, :year, :average_rating, :rating_count] %>
+
+<h2>Top Styles</h2>
+<%= render 'list', array:@best_styles, columns:[:name, :average_rating, :rating_count] %>
 
 <h2>Most recent ratings</h2>
-<%= render 'list', array:@recent_ratings, columns:[:beer, :score, :user] %>
+<%= render 'list', array:@recent_ratings, columns:[:beer, :score, :user, :created_at] %>
+
+<h2>Most active reviewers</h2>
+<%= render 'list', array:@most_active_users, columns:[:username, :rating_count, :average_rating] %>
 
 <%= link_to 'New rating', new_rating_path %>

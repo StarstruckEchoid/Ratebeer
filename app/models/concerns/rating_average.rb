@@ -10,6 +10,10 @@ module RatingAverage
     sum / rc
   end
 
+  def rating_count
+    ratings.count
+  end
+
   def self.compare
     ->(a, b) { b.safe_average_rating <=> a.safe_average_rating }
   end

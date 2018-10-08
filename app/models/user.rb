@@ -15,6 +15,8 @@ class User < ApplicationRecord
   has_many :memberships, dependent: :destroy
   has_many :beer_clubs, through: :memberships
 
+  scope :most_active, ->{ all.sort{ |u| -u.ratings.count }.first 3 }
+
   def favorite_beer
     return nil if ratings.empty?
 

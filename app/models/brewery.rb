@@ -13,7 +13,7 @@ class Brewery < ApplicationRecord
 
   scope :active, -> { where active: true }
   scope :retired, -> { where active: [nil, false] }
-  scope :best, -> { all.sort( & RatingAverage.compare ).first 3 }
+  scope :best, -> { all.sort(& RatingAverage.compare).first 3 }
 
   def print_report
     puts name
