@@ -8,7 +8,7 @@
   </thead>
 
   <tbody>
-  <% array.each do |value| %>
+  <% values.each do |value| %>
       <tr>
         <% columns.each do |column| %>
           <td><%= value.send(column) %></td>

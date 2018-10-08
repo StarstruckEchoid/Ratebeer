@@ -1,14 +1,12 @@
 
 
-<p>
-  <strong>Name:</strong>
+<h2>
   <%= @style.name %>
-</p>
+</h2>
 
-<p>
-  <strong>Description:</strong>
+<quote>
   <%= @style.description %>
-</p>
+</quote>
 
 <p>
   <strong>Beers of this style</strong>
@@ -19,5 +17,5 @@
   </ul>
 </p>
 
-<%= link_to 'Edit', edit_style_path(@style) %> |
-<%= link_to 'Back', styles_path %>
+<%= edit_and_destroy_buttons(@style) %>
+
