@@ -12,6 +12,9 @@ Rails.application.routes.draw do
   resources :users
   resources :ratings, only: [:index, :new, :create, :destroy]
   resources :beers
+  resources :breweries do
+    post 'toggle_activity', on: :member
+  end
   resources :breweries
   resources :places, only: [:index, :show]
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
