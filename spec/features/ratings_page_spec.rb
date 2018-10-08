@@ -2,7 +2,7 @@ require 'rails_helper'
 
 include Helpers
 
-describe "Rating" do
+describe "Ratings Page" do
   let!(:brewery) { FactoryBot.create :brewery, name: "Koff" }
   let!(:beer1) { FactoryBot.create :beer, name: "iso 3", brewery: brewery }
   let!(:beer2) { FactoryBot.create :beer, name: "Karhu", brewery: brewery }
@@ -29,18 +29,6 @@ describe "Rating" do
   end
 
   describe "Index" do
-    it "says there are no ratings when there are no ratings" do
-      visit ratings_path
-      expect(page).to have_content('0 ratings')
-    end
-
-    it "shows rating count and the ratings, when there are ratings" do
-      FactoryBot.create(:rating, beer: beer1, user: user, score: 10)
-      visit ratings_path
-      expect(page).to have_content('1 rating')
-      expect(page).to have_content('iso 3')
-      expect(page).to have_content('10')
-      expect(page).to have_content('Pekka')
-    end
+    
   end
 end
