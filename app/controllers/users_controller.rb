@@ -1,10 +1,11 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :ensure_that_admin, only: [:toggle_banned]
 
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
+    @users = (current_user && current_user.admin?) ? User.all : User.active
   end
 
   # GET /users/1
@@ -59,6 +60,14 @@ class UsersController < ApplicationController
       format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def toggle_banned
+    user = User.find_by id: params[:id]
+    user.banned ^= true
+    user.save(validate: false)
+    done = user.banned? ? "banned" : "unbanned"
+    redirect_to request.referrer, notice: "User was #{done}."
   end
 
   private

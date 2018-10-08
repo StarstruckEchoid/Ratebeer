@@ -5,7 +5,7 @@ class SessionsController < ApplicationController
   def create
     user = User.find_by username: params[:username]
     if user&.authenticate(params[:password])
-      redirect_to signin_path, notice: "User has been banned. Please contact administration." and return if user.banned?
+      redirect_to(signin_path, notice: "User has been banned. Please contact administration.") && return if user.banned?
 
       session[:user_id] = user.id
       redirect_to user_path(user), notice: "Welcome back!"

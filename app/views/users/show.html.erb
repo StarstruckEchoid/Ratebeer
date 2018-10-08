@@ -1,12 +1,21 @@
-
-
-<p>
-  <strong>Username:</strong>
+<h2>
   <%= un = @user.username %>
-</p>
+  <% if @user.banned?  %>
+    <span class="badge badge-info">banned</span>
+  <% end %>
+</h2>
+
+<% if current_user && current_user.admin? %>
+  <% if @user.banned? %>
+    <%= link_to "Unban", toggle_banned_user_path(@user.id), method: :post, class:'btn btn-success' %>
+  <% else %>
+    <%= link_to "Ban", toggle_banned_user_path(@user.id), method: :post, class:'btn btn-danger' %>
+  <% end %>
+
+<% end %>
 
 <p>
-  <strong>Ratings:</strong>
+  <h2>Ratings</h2>
 </p>
 <% if @user.ratings.empty? %>
   <%= "#{un} hasn't made any ratings yet." %>

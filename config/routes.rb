@@ -9,6 +9,9 @@ Rails.application.routes.draw do
   post 'places', to:'places#search'
   delete 'signout', to: 'sessions#destroy'
   resource :session, only: [:new, :create, :destroy]
+  resources :users do
+    post 'toggle_banned', on: :member
+  end
   resources :users
   resources :ratings, only: [:index, :new, :create, :destroy]
   resources :beers
