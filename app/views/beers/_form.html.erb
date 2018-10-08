@@ -11,19 +11,19 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :name %><br>
-    <%= f.text_field :name %>
+    <%= f.text_field :name, class:"form-control" %>
   </div>
-  <div class="field">
+  <div class="form-group">
     <%= f.label :style %><br>
-    <%= f.select :style_id, options_from_collection_for_select(@styles, :id, :name, selected: @beer.style) %>
+    <%= f.select :style_id, options_from_collection_for_select(@styles, :id, :name, selected: @beer.style), class:"form-control" %>
   </div>
-  <div class="field">
+  <div class="form-group">
     <%= f.label :brewery_id %><br>
-    <%= f.select :brewery_id, options_from_collection_for_select(@breweries, :id, :name, selected: @beer.brewery.id) %>
+    <%= f.select :brewery_id, options_from_collection_for_select(@breweries, :id, :name, selected: @beer.brewery.id), class:"form-control" %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit class:"btn btn-primary" %>
   </div>
 <% end %>
