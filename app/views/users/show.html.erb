@@ -5,7 +5,7 @@
   <% end %>
 </h2>
 
-<% if current_user && current_user.admin? %>
+<% if current_user&.admin? %>
   <% if @user.banned? %>
     <%= link_to "Unban", toggle_banned_user_path(@user.id), method: :post, class:'btn btn-success' %>
   <% else %>

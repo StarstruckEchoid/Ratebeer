@@ -13,6 +13,6 @@ class ApplicationController < ActionController::Base
   end
 
   def ensure_that_admin
-    redirect_to request.referrer, notice: 'Only administrators are allowed to do this!' unless current_user.admin?
+    redirect_to request.referrer, notice: 'Only administrators are allowed to do this!' unless current_user&.admin?
   end
 end
