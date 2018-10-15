@@ -1,24 +1,35 @@
 Rails.application.routes.draw do
-  resources :styles
-  resources :memberships
-  resources :beer_clubs
   root 'breweries#index'
-  get 'places', to: 'places#index'
-  get 'signup', to: 'users#new'
+  #Styles
+  resources :styles
+  #Memberships
+  resources :memberships
+  #Beer Clubs
+  resources :beer_clubs
+  #Sessions
   get 'signin', to: 'sessions#new'
-  post 'places', to:'places#search'
   delete 'signout', to: 'sessions#destroy'
   resource :session, only: [:new, :create, :destroy]
+  #Users
   resources :users do
     post 'toggle_banned', on: :member
   end
   resources :users
+  get 'signup', to: 'users#new'
+  #Ratings
   resources :ratings, only: [:index, :new, :create, :destroy]
+  #Beers
   resources :beers
+  get 'beerlist', to: 'beers#list'
+  #Breweries
   resources :breweries do
     post 'toggle_activity', on: :member
   end
   resources :breweries
+  get 'brewerylist', to: 'breweries#list'
+  #Places
   resources :places, only: [:index, :show]
+  get 'places', to: 'places#index'
+  post 'places', to:'places#search'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
