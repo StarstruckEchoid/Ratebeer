@@ -10,11 +10,11 @@ class BeerClubsController < ApplicationController
 
     order = params[:order] || 'name'
 
-    function = case order
-      when 'name' then ->(b){ b.name }
-      when 'founded' then ->(b){ b.founded }
-      when 'city' then ->(b){ b.city }
-    end
+    function =  case order
+                when 'name' then ->(b){ b.name }
+                when 'founded' then ->(b){ b.founded }
+                when 'city' then ->(b){ b.city }
+                end
 
     @beer_clubs = @beer_clubs.sort_by{ |b| function.call(b) }
   end
