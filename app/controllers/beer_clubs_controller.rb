@@ -22,7 +22,7 @@ class BeerClubsController < ApplicationController
   # GET /beer_clubs/1
   # GET /beer_clubs/1.json
   def show
-    return @membership if (@membership = Membership.find_by(user_id: current_user, beer_club_id: @beer_club.id))
+    return @membership if (@membership = Membership.find_by(user: current_user, beer_club: @beer_club))
 
     @membership = Membership.new
     @membership.user = current_user
@@ -42,9 +42,10 @@ class BeerClubsController < ApplicationController
   # POST /beer_clubs.json
   def create
     @beer_club = BeerClub.new(beer_club_params)
+    @membership = Membership.new user: current_user, beer_club: @beer_club, confirmed: true
 
     respond_to do |format|
-      if @beer_club.save
+      if @beer_club.save && @membership.save
         format.html { redirect_to @beer_club, notice: 'Beer club was successfully created.' }
         format.json { render :show, status: :created, location: @beer_club }
       else

@@ -1,41 +1,33 @@
+<h1><%= @beer_club.name %></h1>
+<h2>Founded
+    <%= @beer_club.founded %>
+    in
+    <%= @beer_club.city %>
+</h2>
 
-
-<p>
-  <strong>Name:</strong>
-  <%= @beer_club.name %>
-</p>
-
-<p>
-  <strong>Founded:</strong>
-  <%= @beer_club.founded %>
-</p>
-
-<p>
-  <strong>City:</strong>
-  <%= @beer_club.city %>
-</p>
-
-<p>
-  <strong>Members:</strong>
-</p>
-
-<ul>
-  <% @beer_club.members.each do |m| %>
-    <li><%= link_to m.username, m %></li>
+<h2>Members:</h2>
+<ul class="list-group">
+  <% @beer_club.confirmed_memberships.map(&:user).each do |m| %>
+    <%= link_to m.username, m, class:"list-group-item list-group-item-action" %>
   <% end %>
 </ul>
 
-<% if (user = User.find_by id: current_user) %>
-  <% if(@beer_club.members.exclude?(user)) %>
-    <%= form_for(@membership) do |f| %>
-      <%= f.hidden_field :beer_club_id %>
-      <%= f.submit value: "Join club!" %>
-    <% end %>
-  <% else %>
-    <%= form_for(@membership, method: "delete") do |f| %>
-      <%= f.hidden_field :beer_club_id %>
-      <%= f.submit value: "Leave the club." %>
-    <% end %>
+<h2>Pending requests:</h2>
+<ul class="list-group">
+  <% @beer_club.pending_requests.each do |r| %>
+    <li class="list-group-item"><%= r.user.username %></li>
+  <% end %>
+</ul>
+
+<% if(@beer_club.members.include?(current_user)) %>
+  <%= form_for(@membership, method: "delete") do |f| %>
+    <%= f.hidden_field :beer_club_id %>
+    <%= f.submit value: "Leave the club." %>
+  <% end %>
+<% elsif current_user %>
+  <%= form_for(@membership) do |f| %>
+    <%= f.hidden_field :beer_club_id %>
+    <%= f.submit value: "Join club!" %>
   <% end %>
 <% end %>
 
