@@ -3,7 +3,9 @@ Rails.application.routes.draw do
   #Styles
   resources :styles
   #Memberships
-  resources :memberships
+  resources :memberships do
+    post 'confirm', on: :member
+  end
   #Beer Clubs
   resources :beer_clubs
   #Sessions
@@ -14,7 +16,6 @@ Rails.application.routes.draw do
   resources :users do
     post 'toggle_banned', on: :member
   end
-  resources :users
   get 'signup', to: 'users#new'
   #Ratings
   resources :ratings, only: [:index, :new, :create, :destroy]
@@ -25,7 +26,6 @@ Rails.application.routes.draw do
   resources :breweries do
     post 'toggle_activity', on: :member
   end
-  resources :breweries
   get 'brewerylist', to: 'breweries#list'
   #Places
   resources :places, only: [:index, :show]

@@ -12,12 +12,17 @@
   <% end %>
 </ul>
 
-<h2>Pending requests:</h2>
-<ul class="list-group">
-  <% @beer_club.pending_requests.each do |r| %>
-    <li class="list-group-item"><%= r.user.username %></li>
-  <% end %>
-</ul>
+<% if @beer_club.confirmed_member? current_user %>
+  <h2>Pending requests:</h2>
+  <ul class="list-group">
+    <% @beer_club.pending_requests.each do |r| %>
+      <li class="list-group-item">
+        <%= r.user.username %>
+        <%= link_to "Confirm", confirm_membership_path(r), method: :post, class:"btn btn-primary" %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
 
 <% if(@beer_club.members.include?(current_user)) %>
   <%= form_for(@membership, method: "delete") do |f| %>

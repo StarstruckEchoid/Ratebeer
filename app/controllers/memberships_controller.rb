@@ -1,5 +1,6 @@
 class MembershipsController < ApplicationController
-  before_action :set_membership, only: [:show, :edit, :update, :destroy]
+  before_action :set_membership, only: [:show, :edit, :update, :destroy, :confirm]
+  before_action :ensure_that_member_too, only: [:confirm]
   before_action :set_beer_clubs, only: [:new, :create]
 
   # GET /memberships
@@ -66,6 +67,14 @@ class MembershipsController < ApplicationController
     end
   end
 
+  def confirm
+    if @membership&.update confirmed: true
+      redirect_to request.referrer, notice: "#{@membership.user} was accepted into #{@membership.beer_club}."
+    else
+      byebug
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -81,5 +90,9 @@ class MembershipsController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def membership_params
     params.require(:membership).permit(:user_id, :beer_club_id)
+  end
+
+  def ensure_that_member_too
+    redirect_to request.referrer, notice: "You have to be a member of this club to confirm new members." unless @membership.beer_club.confirmed_member? current_user
   end
 end
