@@ -34,4 +34,14 @@ describe "Beerlist page" do
   it "lists beers in alphabetical order by default", js:true do
     expect(page).to have_content /Fastenbier[\s\S]*Lechte Weisse[\s\S]*Nikolai/
   end
+
+  it "sorts by style when clicking on 'Style'.", js:true do
+    click_on("Style")
+    expect(page).to have_content /Lager[\s\S]*Rauchbier[\s\S]*Weizen/
+  end
+
+  it "sorts by brewery when clicking on 'Brewery'.", js:true do
+    click_on("Brewery")
+    expect(page).to have_content /Ayinger[\s\S]*Koff[\s\S]*Schlenkerla/
+  end
 end
