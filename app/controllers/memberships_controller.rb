@@ -68,11 +68,7 @@ class MembershipsController < ApplicationController
   end
 
   def confirm
-    if @membership&.update confirmed: true
-      redirect_to request.referrer, notice: "#{@membership.user} was accepted into #{@membership.beer_club}."
-    else
-      byebug
-    end
+    redirect_to request.referrer, notice: "#{@membership.user} was accepted into #{@membership.beer_club}." if (@membership.update confirmed: true)
   end
 
   private

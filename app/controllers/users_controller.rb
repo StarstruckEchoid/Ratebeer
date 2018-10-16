@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = current_user&.admin? ? User.all : User.active
+    @users = User.includes(:ratings, :beers).all
   end
 
   # GET /users/1

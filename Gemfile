@@ -81,3 +81,6 @@ gem 'httparty'
 # Stylesheets with Bootstrap
 gem 'bootstrap', '~> 4.1.3'
 gem 'jquery-rails'
+
+#Logging
+gem 'rack-mini-profiler'
