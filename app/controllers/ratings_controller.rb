@@ -1,10 +1,9 @@
 class RatingsController < ApplicationController
   def index
-    @ratings = Rating.all
-    @recent_ratings = Rating.includes(:beer, :user).recent
     @best_beers = Beer.includes(:brewery).best
     @best_breweries = Brewery.best
     @best_styles = Style.best
+    @recent_ratings = Rating.includes(:beer, :user).recent
     @most_active_users = User.includes(:ratings).most_active
   end
 
