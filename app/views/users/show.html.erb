@@ -20,17 +20,17 @@
 <% if @user.ratings.empty? %>
   <%= "#{un} hasn't made any ratings yet." %>
 <% else %>
-  <%= "#{un} has made #{pluralize @user.ratings.count, 'rating'}, average rating: #{@user.average_rating}"%><br>
+  <%= "#{un} has made #{pluralize @user.ratings.count, 'rating'}, average rating: #{round @user.average_rating}"%><br>
   <%= "#{un}'s favorite beer is #{@user.favorite_beer} and the favorite style of beer is #{@user.favorite_style}."%><br>
   <%= "#{un}'s favorite brewery is #{@user.favorite_brewery}."%>
 <% end %>
 
-<ul>
+<ul class="list-group">
 <% @user.ratings.each do |r| %>
-  <li>
+  <li class= "list-group-item" >
     <%= link_to r.to_s, r.beer %>
     <% if @user == current_user %>
-      <%= link_to 'delete', r, method: :delete, data: { confirm: 'Are you sure?' } %>
+      <%= link_to 'delete', r, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
     <% end %>
   </li>
 <% end %>

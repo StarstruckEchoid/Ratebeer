@@ -3,15 +3,18 @@ class BeersController < ApplicationController
   before_action :set_breweries_and_styles_for_template, only: [:new, :edit, :create]
   before_action :ensure_that_signed_in, except: [:index, :show, :list]
   before_action :ensure_that_admin, only: [:destroy]
+  before_action :expire_beerlist, only: [:create, :update, :destroy]
 
   # GET /beers
   # GET /beers.json
   def index
+    return if request.format.html? && fragment_exist?('beerlist')
+
     @beers = Beer.includes(:brewery, :style).all
 
-    order = params[:order] || 'name'
+    @order = params[:order] || 'name'
 
-    function = case order
+    function = case @order
                when 'name' then ->(b){ b.name }
                when 'brewery' then ->(b){ b.brewery.name }
                when 'style' then ->(b){ b.style.name }
@@ -96,5 +99,9 @@ class BeersController < ApplicationController
   def set_breweries_and_styles_for_template
     @breweries = Brewery.all
     @styles = Style.all
+  end
+
+  def expire_beerlist
+    ["beerlist-name", "beerlist-brewery", "beerlist-style"].each{ |f| expire_fragment(f) }
   end
 end

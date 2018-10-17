@@ -2,6 +2,7 @@ class BreweriesController < ApplicationController
   before_action :set_brewery, only: [:show, :edit, :update, :destroy]
   before_action :ensure_that_signed_in, except: [:index, :show, :list]
   before_action :ensure_that_admin, only: [:destroy]
+  before_action :expire_brewerylist, only: [:create, :update, :destroy, :toggle_activity]
 
   # GET /breweries
   # GET /breweries.json
@@ -87,5 +88,9 @@ class BreweriesController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def brewery_params
     params.require(:brewery).permit(:name, :year, :active)
+  end
+
+  def expire_brewerylist
+    expire_fragment 'brewerylist'
   end
 end
