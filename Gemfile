@@ -87,3 +87,6 @@ gem 'rack-mini-profiler'
 
 #Background jobs.
 gem 'sucker_punch', '~> 2.0'
+
+#Authentication via Github
+gem 'omniauth-github'

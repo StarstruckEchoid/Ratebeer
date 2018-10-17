@@ -18,4 +18,9 @@ class SessionsController < ApplicationController
     session[:user_id] = nil
     redirect_to :root, notice: "Sign out successful."
   end
+
+  def create_oauth
+    info = request.env["omniauth.auth"].info
+    redirect_to root_path;
+  end
 end

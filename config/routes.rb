@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   #Sessions
   get 'signin', to: 'sessions#new'
   delete 'signout', to: 'sessions#destroy'
+  get 'auth/:provider/callback', to: 'sessions#create_oauth', as:'auth'
   resource :session, only: [:new, :create, :destroy]
   #Users
   resources :users do
@@ -31,5 +32,6 @@ Rails.application.routes.draw do
   resources :places, only: [:index, :show]
   get 'places', to: 'places#index'
   post 'places', to:'places#search'
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
