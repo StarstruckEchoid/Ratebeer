@@ -1,10 +1,11 @@
 class RatingsController < ApplicationController
   def index
-    @best_beers = Beer.includes(:brewery).best
-    @best_breweries = Brewery.best
-    @best_styles = Style.best
-    @recent_ratings = Rating.includes(:beer, :user).recent
-    @most_active_users = User.includes(:ratings).most_active
+    # Getting up-to-date information in the cache is handled by UpdateTopJob, at /jobs/update_top_job.rb
+    @best_beers = Rails.cache.read('best_beers')
+    @best_breweries = Rails.cache.read('best_breweries')
+    @best_styles = Rails.cache.read('best_styles')
+    @recent_ratings = Rails.cache.read('best_ratings')
+    @most_active_users = Rails.cache.read('most_active_users')
   end
 
   def new
