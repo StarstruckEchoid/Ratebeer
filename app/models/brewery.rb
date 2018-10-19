@@ -2,6 +2,7 @@
 
 class Brewery < ApplicationRecord
   include RatingAverage
+  extend Rankable
 
   has_many :beers, dependent: :destroy
   has_many :ratings, through: :beers
@@ -13,7 +14,6 @@ class Brewery < ApplicationRecord
 
   scope :active, -> { where active: true }
   scope :retired, -> { where active: [nil, false] }
-  scope :best, -> { all.sort(& RatingAverage.compare).first 3 }
 
   def print_report
     puts name

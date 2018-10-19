@@ -1,5 +1,6 @@
 class Beer < ApplicationRecord
   include RatingAverage
+  extend Rankable
 
   validates :name, presence: true
   validates :style, presence: true
@@ -8,8 +9,6 @@ class Beer < ApplicationRecord
   belongs_to :style
   has_many :ratings, dependent: :destroy
   has_many :raters, through: :ratings, source: :user
-
-  scope :best, -> { all.sort(& RatingAverage.compare).first 3 }
 
   def to_s
     "#{name} by #{brewery.name}"
