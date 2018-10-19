@@ -10,7 +10,7 @@ class RatingsController < ApplicationController
 
   def new
     @rating = Rating.new
-    @beers = Beer.all
+    @beers = Beer.includes(:brewery).all
   end
 
   def create

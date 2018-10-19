@@ -21,6 +21,13 @@ class SessionsController < ApplicationController
 
   def create_oauth
     info = request.env["omniauth.auth"].info
-    redirect_to root_path;
+    username = info.nickname
+    user = User.find_by username: username
+    if user.nil?
+      passwd = SecureRandom.urlsafe_base64(20)
+      user = User.create username: username, password: passwd, password_confirmation: passwd
+    end
+    session[:user_id] = user.id
+    redirect_to user_path(user), notice: "Welcome to Ratebeer, #{user.username}!"
   end
 end
